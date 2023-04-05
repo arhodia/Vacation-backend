@@ -7,21 +7,58 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Log4j2
 @RequestMapping("/api")
 public class CompanyController {
     private CompanyService companyService;
 
-    public CompanyController(CompanyService companyService) {
+    public CompanyController(CompanyService companyService)
+    {
         this.companyService = companyService;
     }
 
     @PostMapping("/company")
-    public ResponseEntity<CompanyDTO> save(@RequestBody CompanyDTO companyDTO){
+    public ResponseEntity<CompanyDTO> save(@RequestBody CompanyDTO companyDTO)
+    {
         log.debug("Rest request to save Company : {}",companyDTO);
         CompanyDTO result = companyService.save(companyDTO);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
+    }
+
+
+    @GetMapping("/company/{id}")
+    public ResponseEntity<CompanyDTO> getCompany(@PathVariable Long id)
+    {
+        log.debug("Rest request to get Company by id : {}",id);
+        CompanyDTO result = companyService.getById(id);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/allcompany")
+    public ResponseEntity<List<CompanyDTO>> getAllEmployee()
+    {
+        log.debug("Rest request to get All Employee  : {}");
+        List<CompanyDTO> result = companyService.getAllCompany();
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/updatecompany/{id}")
+    public ResponseEntity<CompanyDTO> updateCompany(@PathVariable Long id, @RequestBody CompanyDTO companyDTO)
+    {
+        log.debug("Rest request to save Company : {}",companyDTO);
+        CompanyDTO result = companyService.updateCompany(id,companyDTO);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/deleteCompanyById/{id}")
+    public String deleteCompany(@PathVariable("id") Long id)
+    {
+        companyService.delete(id);
+        return "Deleted Successfully";
+
     }
 
 }

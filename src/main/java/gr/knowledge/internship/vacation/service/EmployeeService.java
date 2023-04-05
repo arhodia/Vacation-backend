@@ -8,8 +8,12 @@ import gr.knowledge.internship.vacation.service.mapper.EmployeeMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.w3c.dom.stylesheets.LinkStyle;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -23,21 +27,24 @@ public class EmployeeService {
     private static final String NotFoundExceptionMessage = "Not Found";
 
 
-    public EmployeeService(EmployeeRepository employeeRepository, EmployeeMapper employeeMapper) {
+    public EmployeeService(EmployeeRepository employeeRepository, EmployeeMapper employeeMapper)
+    {
         this.employeeRepository = employeeRepository;
         this.employeeMapper = employeeMapper;
     }
 
     @Transactional
-    public EmployeeDTO save(EmployeeDTO employeeDTO){
-        log.debug("Request to save Company : {}",employeeDTO);
+    public EmployeeDTO save(EmployeeDTO employeeDTO)
+    {
+        log.debug("Request to save Employee : {}",employeeDTO);
         Employee employee = employeeMapper.toEntity(employeeDTO);
         employee = employeeRepository.save(employee);
         return employeeMapper.toDto(employee);
     }
 
     @Transactional(readOnly = true)
-    public EmployeeDTO getById(Long id){
+    public EmployeeDTO getById(Long id)
+    {
         EmployeeDTO result;
         log.debug("Request to get Employee by id : {}",id);
         Optional<Employee> employee = employeeRepository.findById(id);
@@ -48,4 +55,43 @@ public class EmployeeService {
         }
         return result;
     }
+
+    @Transactional(readOnly = true)
+    public List<EmployeeDTO> getAllEmployee()
+    {
+        log.debug("Request to get all Employee.");
+        List<Employee> employees = employeeRepository.findAll();
+        List<EmployeeDTO> employeesDTOs = new ArrayList<>();
+        for(Employee employee : employees){
+            EmployeeDTO employeeDTO = employeeMapper.toDto(employee);
+            employeesDTOs.add(employeeDTO);
+        }
+        return employeesDTOs;
+    }
+
+
+    @Transactional(readOnly = true)
+    public EmployeeDTO updateEmployee(Long id,EmployeeDTO employeeDTO)
+    {
+        log.debug("Request to save Employee : {}",employeeDTO);
+        Employee employee = employeeMapper.toEntity(employeeDTO);
+        if(employeeRepository.existsById(employee.getId()))
+        {
+            Employee saveProducts = employeeRepository.save(employee);
+
+        }
+        else
+        {
+            throw new NotFoundException("Employee not found ");
+        }
+        return employeeMapper.toDto(employee);
+    }
+
+    public void delete(Long id)
+    {
+        employeeRepository.deleteById(id);
+
+    }
+
+
 }

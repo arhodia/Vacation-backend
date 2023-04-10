@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 
 @Entity
@@ -13,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class EmployeeProduct
+public class EmployeeProduct implements Serializable
 {
 
     @Id
@@ -25,7 +26,7 @@ public class EmployeeProduct
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
-    private Employee employeeprdctEmployee;
+    private Employee employeeEmployee;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", referencedColumnName = "id")

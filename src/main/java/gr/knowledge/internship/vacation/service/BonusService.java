@@ -1,17 +1,15 @@
 package gr.knowledge.internship.vacation.service;
 import gr.knowledge.internship.vacation.domain.Bonus;
-import gr.knowledge.internship.vacation.domain.Company;
 import gr.knowledge.internship.vacation.exception.NotFoundException;
 import gr.knowledge.internship.vacation.repository.BonusRepository;
-
 import gr.knowledge.internship.vacation.service.dto.BonusDTO;
-import gr.knowledge.internship.vacation.service.dto.CompanyDTO;
 import gr.knowledge.internship.vacation.service.mapper.BonusMapper;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +21,7 @@ public class BonusService {
     private BonusRepository bonusRepository;
 
     private BonusMapper bonusMapper;
-
+    private Bonus bonus;
     private static final String NotFoundExceptionMessage = "Not Found";
 
 
@@ -31,6 +29,7 @@ public class BonusService {
     {
         this.bonusRepository = bonusRepository;
         this.bonusMapper = bonusMapper;
+
     }
 
 
@@ -94,33 +93,64 @@ public class BonusService {
 
     }
 
-    public enum BonusRate{
-        WINTER("winter", 1.3),
-        AUTUMN("autumn", 0.4),
-        SPRING("spring", 0.6),
-        SUMMER("summer", 0.7);
+    //task3
+    public enum SeasonRate{
+        WINTER("Winter", 1.2),
+        AUTUMN("Autumn", 1.1),
+        SPRING("Spring", 1.0),
+        SUMMER("Summer", 1.3);
 
-        private final String season;
-        private final double rate;
+        private String season;
+        private Double rate;
+        private LocalDate startDate;
+        private LocalDate endDate;
 
-        private BonusRate(String season, double rate) {
+        SeasonRate(String season, Double rate) {
             this.season = season;
             this.rate = rate;
+            this.startDate = startDate;
+            this.endDate = endDate;
         }
 
         public String getSeason() {
             return season;
         }
 
-        public double getRate() {
+        public Double getRate() {
             return rate;
         }
-    }
 
+        public boolean containsDate(LocalDate date) {
+            return date.isAfter(startDate) && date.isBefore(endDate);
+        }
+    }
+/*
     public Double getCalculationOfBonus(Double salary,String season)
     {
+        SeasonRate mySeason= SeasonRate.valueOf(season.toUpperCase());
+      Double result = null;
+      if(bonus.getAmount()==salary)
+      {
+          result=bonus.getBonusEmployee().getSalary() * mySeason.getRate();
+      } else if ( bonus.getAmount()==salary)
+      {
+          result=salary * mySeason.getRate();
+      }else if ( bonus.getAmount()==salary)
+      {
+          result=bonus.getAmount() * mySeason.getRate();
+      }else if (bonus.getAmount()==salary)
+      {
+          result=bonus.getAmount() * mySeason.getRate();
+      }
+      return result;
+    }*/
 
-
-
+    public double getCalculationOfBonus(Double salary,String season)
+    {
+        SeasonRate mySeason= SeasonRate.valueOf(season.toUpperCase());
+        Double rate = mySeason.getRate();
+         return salary*rate;
     }
+
+
 }

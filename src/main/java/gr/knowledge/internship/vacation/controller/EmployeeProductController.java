@@ -17,7 +17,7 @@ public class EmployeeProductController {
     {
         this.employeeProductService = employeeProductService;
     }
-
+    @CrossOrigin
     @PostMapping("/employeeProduct")
     public ResponseEntity<EmployeeProductDTO> save(@RequestBody EmployeeProductDTO employeeProductDTO)
     {
@@ -25,7 +25,7 @@ public class EmployeeProductController {
         EmployeeProductDTO result = employeeProductService.save(employeeProductDTO);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
-
+    @CrossOrigin
     @GetMapping("/employeeProduct/{id}")
     public ResponseEntity<EmployeeProductDTO> getEmployeeProduct(@PathVariable Long id)
     {
@@ -33,7 +33,7 @@ public class EmployeeProductController {
         EmployeeProductDTO result = employeeProductService.getById(id);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
+    @CrossOrigin
     @GetMapping("/allEmployeeProduct")
     public ResponseEntity<List<EmployeeProductDTO>> getAllEmployeeProduct()
     {
@@ -41,7 +41,7 @@ public class EmployeeProductController {
         List<EmployeeProductDTO> result =  employeeProductService.getAllEmployeeProduct();
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
-
+    @CrossOrigin
     @PutMapping("/updateEmployeeProduct/{id}")
     public ResponseEntity<EmployeeProductDTO> updateEmployeeProduct(@PathVariable Long id, @RequestBody EmployeeProductDTO employeeProductDTO)
     {
@@ -49,7 +49,7 @@ public class EmployeeProductController {
         EmployeeProductDTO result =employeeProductService.updateEmployeeProduct(id,employeeProductDTO);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
-
+    @CrossOrigin
     @DeleteMapping("/deleteEmployeeProductById/{id}")
     public String deleteCompany(@PathVariable("id") Long id)
     {

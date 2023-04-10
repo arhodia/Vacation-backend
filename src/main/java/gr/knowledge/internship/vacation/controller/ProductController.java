@@ -20,7 +20,7 @@ public class ProductController {
     {
         this.productService =productService;
     }
-
+    @CrossOrigin
     @PostMapping("/product")
     public ResponseEntity<ProductDTO> save(@RequestBody ProductDTO productDTO)
     {
@@ -29,7 +29,7 @@ public class ProductController {
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
-
+    @CrossOrigin
     @GetMapping("/product/{id}")
     public ResponseEntity<ProductDTO> getProduct(@PathVariable Long id)
     {
@@ -37,7 +37,7 @@ public class ProductController {
         ProductDTO result = productService.getById(id);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
+    @CrossOrigin
     @GetMapping("/allproduct")
     public ResponseEntity<List<ProductDTO>> getAllEmployee()
     {
@@ -45,7 +45,7 @@ public class ProductController {
         List<ProductDTO> result = productService.getAllProduct();
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
-
+    @CrossOrigin
     @PutMapping("/updateproduct/{id}")
     public ResponseEntity<ProductDTO> updateProducts(@PathVariable Long id, @RequestBody ProductDTO productDTO)
     {
@@ -53,7 +53,7 @@ public class ProductController {
         ProductDTO result = productService.updateProduct(id,productDTO);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
-
+    @CrossOrigin
     @DeleteMapping("/deleteProductById/{id}")
     public String deleteCompany(@PathVariable("id") Long id)
     {

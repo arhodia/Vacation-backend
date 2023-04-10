@@ -14,25 +14,26 @@ import java.util.Optional;
 
 
 
+
 @Service
 @Transactional
 @Log4j2
 public class CompanyService {
 
     private final CompanyRepository companyRepository;
-
-
     private final CompanyMapper companyMapper;
     private static final String NotFoundExceptionMessage = "Not Found";
 
-    public CompanyService(CompanyRepository companyRepository,CompanyMapper companyMapper) {
+    public CompanyService(CompanyRepository companyRepository,CompanyMapper companyMapper)
+    {
         this.companyRepository = companyRepository;
         this.companyMapper = companyMapper;
     }
 
 
     @Transactional
-    public CompanyDTO save(CompanyDTO companyDTO){
+    public CompanyDTO save(CompanyDTO companyDTO)
+    {
         log.debug("Request to save Company : {}",companyDTO);
         Company company = companyMapper.toEntity(companyDTO);
         company = companyRepository.save(company);
@@ -45,11 +46,12 @@ public class CompanyService {
         CompanyDTO result;
         log.debug("Request to get Company by id : {}",id);
         Optional<Company> company = companyRepository.findById(id);
-        if(company.isPresent()){
+        if(company.isPresent())
+        {
             result = companyMapper.toDto(company.get());
-        }else {
+        }else
+        {
             throw new NotFoundException(NotFoundExceptionMessage);
-
         }
         return result;
     }

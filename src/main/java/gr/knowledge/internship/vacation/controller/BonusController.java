@@ -18,7 +18,7 @@ public class BonusController {
     {
         this.bonusService = bonusService;
     }
-
+    @CrossOrigin
     @PostMapping("/bonus")
     public ResponseEntity<BonusDTO> save(@RequestBody BonusDTO bonusDTO )
     {
@@ -26,7 +26,7 @@ public class BonusController {
         BonusDTO result = bonusService.save(bonusDTO);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
-
+    @CrossOrigin
     @GetMapping("/bonus/{id}")
     public ResponseEntity<BonusDTO> getBonus(@PathVariable Long id)
     {
@@ -34,7 +34,7 @@ public class BonusController {
         BonusDTO result = bonusService.getById(id);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
+    @CrossOrigin
     @GetMapping("/allbonus")
     public ResponseEntity<List<BonusDTO>> getAllEmployee()
     {
@@ -42,7 +42,7 @@ public class BonusController {
         List<BonusDTO> result = bonusService.getAllBonus();
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
-
+    @CrossOrigin
     @PutMapping("/updatebonus/{id}")
     public ResponseEntity<BonusDTO> updateBonus(@PathVariable Long id, @RequestBody BonusDTO bonusDTO)
     {
@@ -50,7 +50,7 @@ public class BonusController {
         BonusDTO result =  bonusService.updateBonus(id,bonusDTO);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
-
+    @CrossOrigin
     @DeleteMapping("/deletebonusById/{id}")
     public String deletebonus(@PathVariable("id") Long id)
     {
@@ -58,7 +58,7 @@ public class BonusController {
         return "Deleted Successfully";
 
     }
-
+    @CrossOrigin
     @GetMapping("/getCalculationOfBonus")
     public ResponseEntity<Double> getCalculationOfBonus(@RequestParam Double salary,@RequestParam String season)
     {

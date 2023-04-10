@@ -20,6 +20,7 @@ public class CompanyController {
         this.companyService = companyService;
     }
 
+    @CrossOrigin
     @PostMapping("/company")
     public ResponseEntity<CompanyDTO> save(@RequestBody CompanyDTO companyDTO)
     {
@@ -28,7 +29,7 @@ public class CompanyController {
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
-
+    @CrossOrigin
     @GetMapping("/company/{id}")
     public ResponseEntity<CompanyDTO> getCompany(@PathVariable Long id)
     {
@@ -36,7 +37,7 @@ public class CompanyController {
         CompanyDTO result = companyService.getById(id);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
+    @CrossOrigin
     @GetMapping("/allcompany")
     public ResponseEntity<List<CompanyDTO>> getAllEmployee()
     {
@@ -44,7 +45,7 @@ public class CompanyController {
         List<CompanyDTO> result = companyService.getAllCompany();
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
-
+    @CrossOrigin
     @PutMapping("/updatecompany/{id}")
     public ResponseEntity<CompanyDTO> updateCompany(@PathVariable Long id, @RequestBody CompanyDTO companyDTO)
     {
@@ -52,7 +53,7 @@ public class CompanyController {
         CompanyDTO result = companyService.updateCompany(id,companyDTO);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
-
+    @CrossOrigin
     @DeleteMapping("/deleteCompanyById/{id}")
     public String deleteCompany(@PathVariable("id") Long id)
     {

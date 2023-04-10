@@ -6,11 +6,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
-public class VacationRequestDTO {
+
+@Data
+public class VacationRequestDTO implements Serializable{
 
     Long id;
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private VacationRequestDTO  vacrequestEmployee;
+    private EmployeeDTO  vacrequestEmployee;
 
     LocalDate startDate;
     LocalDate endDate;

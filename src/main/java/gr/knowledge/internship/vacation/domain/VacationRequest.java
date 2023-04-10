@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @Table(name = "vacation_request")
 @AllArgsConstructor
 @NoArgsConstructor
-public class VacationRequest {
+public class VacationRequest implements Serializable{
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vacation_request_generator")
@@ -41,5 +41,5 @@ public class VacationRequest {
 
     @NotNull
     @Column(name = "days")
-    Integer Days;
+    Integer days;
 }

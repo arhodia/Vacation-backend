@@ -66,4 +66,11 @@ public class BonusController {
         Double result = bonusService.getCalculationOfBonus(salary,season);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
+/*
+    @CrossOrigin
+    @GetMapping("/getBonusesForCompany")
+    public ResponseEntity<BonusDTO> getBonusesForCompany(@RequestParam Long companyId,@RequestParam String season)
+    {
+
+    }*/
 }

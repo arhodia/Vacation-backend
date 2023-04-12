@@ -1,7 +1,11 @@
 package gr.knowledge.internship.vacation.service;
 import gr.knowledge.internship.vacation.domain.Bonus;
+import gr.knowledge.internship.vacation.domain.Company;
+import gr.knowledge.internship.vacation.domain.Employee;
 import gr.knowledge.internship.vacation.exception.NotFoundException;
 import gr.knowledge.internship.vacation.repository.BonusRepository;
+import gr.knowledge.internship.vacation.repository.EmployeeRepository;
+import gr.knowledge.internship.vacation.repository.CompanyRepository;
 import gr.knowledge.internship.vacation.service.dto.BonusDTO;
 import gr.knowledge.internship.vacation.service.mapper.BonusMapper;
 
@@ -22,6 +26,8 @@ public class BonusService {
 
     private BonusMapper bonusMapper;
     private Bonus bonus;
+    private CompanyRepository companyRepository;
+    private EmployeeRepository employeeRepository;
     private static final String NotFoundExceptionMessage = "Not Found";
 
 
@@ -152,5 +158,16 @@ public class BonusService {
          return salary*rate;
     }
 
+    public List<BonusDTO> getBonusesForCompany(Long companyId,String season)
+    {
+        Optional<Company> company = companyRepository.findById(companyId);
+        Bonus bonus1 = new Bonus();
+        List<Employee> employeesList = employeeRepository.getEmployeeForEachCompany(companyId);
+        List<Employee> newemployeesList = new ArrayList<>();
+        for(Employee details : employeesList)
+        {
+            getCalculationOfBonus(Double.valueOf(companyId),season);
+        }
+    }
 
 }

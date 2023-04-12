@@ -15,7 +15,6 @@ public class RequestVacation {
     @Id
     LocalDate startDate;
     Long employeeId;
-
     LocalDate endDate;
     Integer holiday;
 

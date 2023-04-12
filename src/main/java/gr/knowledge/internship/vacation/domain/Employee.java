@@ -3,7 +3,6 @@ package gr.knowledge.internship.vacation.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -54,7 +53,6 @@ public class Employee implements Serializable {
     @Size(max = 20)
     @Column(name = "employment_type")
     String employmentType;
-
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id", referencedColumnName = "id")

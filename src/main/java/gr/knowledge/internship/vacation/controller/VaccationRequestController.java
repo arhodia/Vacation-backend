@@ -1,5 +1,6 @@
 package gr.knowledge.internship.vacation.controller;
 import gr.knowledge.internship.vacation.service.VacationRequestService;
+import gr.knowledge.internship.vacation.domain.VacationRequestStatus;
 import gr.knowledge.internship.vacation.service.dto.VacationRequestDTO;
 import gr.knowledge.internship.vacation.domain.RequestVacation;
 import gr.knowledge.internship.vacation.domain.CompanyStatus;
@@ -9,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 
@@ -22,6 +25,7 @@ public class VaccationRequestController
     private final VacationRequestService vacationRequestService;
     private RequestVacation requestVacation;
     private CompanyStatus companyStatus;
+    private VacationRequestStatus vacationRequestStatus;
     public VaccationRequestController(VacationRequestService  vacationRequestService)
     {
         this.vacationRequestService= vacationRequestService;
@@ -83,18 +87,47 @@ public class VaccationRequestController
 
     }
 
-
-
-    //Query 4 Vacation Requests by Company
-    @CrossOrigin
-    @GetMapping("/vacationRequestByCompany")
-    public ResponseEntity<List<VacationRequestDTO>> getvacationRequestByCompany(@RequestBody CompanyStatus companyStatus)
+    //Query 2 Vacation Request
+    @PostMapping("/requestForVacation")
+    public ResponseEntity<VacationRequestDTO> requestForVacation(@RequestBody VacationRequestDTO vacationRequestDTO)
     {
-        log.debug("Rest request to get vacationRequest by id : {}");
-        List<VacationRequestDTO> result = vacationRequestService.vacationRequestByCompany(companyStatus.getCompanyId(),companyStatus.getStatus(),companyStatus.getStartDate(),companyStatus.getEndDate());
+        log.debug("Rest request to get vacation request: {}");
+        VacationRequestDTO result = vacationRequestService.requestForVacation(vacationRequestDTO);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    //Query 4 Vacation Requests by Company
+    /*companyId 1,status approved,startDate 2022-03-01,endDate 2022-03-05 */
+    @CrossOrigin
+    @PostMapping ("/vacationRequestByCompany")
+    public List<VacationRequestDTO> getvacationRequestByCompany(@RequestBody CompanyStatus companyStatus)
+    {
+        return vacationRequestService.vacationRequestByCompany(companyStatus.getCompanyId(),companyStatus.getStatus(),companyStatus.getStartDate(),companyStatus.getEndDate());
+    }
+
+    //Query 5 Accept or Reject Vacation Request
+    /*{
+    "vacationId":1,
+    "status" : "accepted"
+    }*/
+    @CrossOrigin
+    @PutMapping("/updateVacationRequestStatus/{vacationId}")
+    public ResponseEntity<VacationRequestDTO> updateVacationRequestStatus(@PathParam("vacationId") Long vacationId,@RequestBody VacationRequestStatus vacationRequestStatus)
+    {
+        log.debug("Rest request to save Company : {}");
+        VacationRequestDTO result = vacationRequestService.updateVacationRequestStatus(vacationRequestStatus );
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
+    }
+    /*
+    //query 4
+    @CrossOrigin
+    @GetMapping("/vacationRequestByCompany")
+    public ResponseEntity<List<CompanyStatusDTO>> getvacationRequestByCompany(@RequestBody CompanyStatus companyStatus)
+    {
+    log.debug("Rest request to get vacationRequest by id : {}");
+    List<CompanyStatusDTO> result = vacationRequestService.vacationRequestByCompany(companyStatus.getCompanyId(),companyStatus.getStatus(),companyStatus.getStartDate(),companyStatus.getEndDate());
+    return new ResponseEntity<>(result, HttpStatus.OK);
+    }*/
 
 
 }

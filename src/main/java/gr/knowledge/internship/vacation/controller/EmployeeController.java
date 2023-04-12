@@ -59,7 +59,19 @@ public class EmployeeController {
     {
         employeeService.delete(id);
         return "Deleted Successfully";
-
     }
+
+
+    //Query 6 Calculate monthly expenses for Company
+    @CrossOrigin
+    @GetMapping("/calculateExpensesForCompany/{employeeCompany}")
+    public Double calculateExpensesForCompany(@PathVariable(value = "employeeCompany",required = false) Long employeeCompany)
+    {
+        log.debug("Rest request to get monthly expenses by company: {}",employeeCompany);
+        Double result = employeeService.calculateExpensesForCompany(employeeCompany);
+        return result;
+    }
+
+
 
 }

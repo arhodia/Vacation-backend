@@ -1,6 +1,7 @@
 package gr.knowledge.internship.vacation.service;
 
 import gr.knowledge.internship.vacation.domain.Company;
+import gr.knowledge.internship.vacation.domain.MonthlyExpenses;
 import gr.knowledge.internship.vacation.exception.NotFoundException;
 import gr.knowledge.internship.vacation.repository.CompanyRepository;
 import gr.knowledge.internship.vacation.service.dto.CompanyDTO;

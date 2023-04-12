@@ -1,6 +1,7 @@
 package gr.knowledge.internship.vacation.service;
 
 import gr.knowledge.internship.vacation.domain.Employee;
+import gr.knowledge.internship.vacation.domain.MonthlyExpenses;
 import gr.knowledge.internship.vacation.exception.NotFoundException;
 import gr.knowledge.internship.vacation.repository.EmployeeRepository;
 import gr.knowledge.internship.vacation.service.dto.EmployeeDTO;
@@ -91,6 +92,18 @@ public class EmployeeService {
     {
         employeeRepository.deleteById(id);
 
+    }
+
+    //Query 6 Calculate monthly expenses for Company
+    //http://localhost:8081/api/calculateExpensesForCompany/51
+    public double calculateExpensesForCompany(Long employeeCompany) {
+        Optional<Employee> optionalEmployee = employeeRepository.findById(employeeCompany);
+        double finallExpenses = 0.0;
+        if (optionalEmployee.isPresent()) {
+            Employee employee = optionalEmployee.get();
+            finallExpenses += employee.getSalary();
+        }
+        return finallExpenses;
     }
 
 

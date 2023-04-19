@@ -1,4 +1,5 @@
 package gr.knowledge.internship.vacation.controller;
+import gr.knowledge.internship.vacation.domain.Product;
 import gr.knowledge.internship.vacation.service.EmployeeProductService;
 import gr.knowledge.internship.vacation.service.dto.EmployeeProductDTO;
 import lombok.extern.log4j.Log4j2;
@@ -6,11 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Log4j2
 @RequestMapping("/api")
-public class EmployeeProductController {
+public class EmployeeProductController
+{
     private EmployeeProductService employeeProductService;
 
     public EmployeeProductController(EmployeeProductService employeeProductService)
@@ -57,6 +60,23 @@ public class EmployeeProductController {
         return "Deleted Successfully";
 
     }
+/*
+    @CrossOrigin
+    @GetMapping("/getAllProductsForACompany/{companyId}")
+    public Map<String,List<ProductDTO>> getAllProductsForACompany(@PathVariable("companyId")Long companyId)
+    {
+        log.debug("Rest request to get AllProduct  : {}");
+        Map<String,List<ProductDTO>> result = employeeProductService.getAllProductsForACompany(companyId);
+        return result;
+    }*/
 
+    @CrossOrigin
+    @GetMapping("/getAllProductsForACompany/{companyId}")
+    public  Map<String, List<Product>> getAllProductsForACompany(@PathVariable("companyId")Long companyId)
+    {
+        log.debug("Rest request to get AllProduct  : {}");
+        Map<String, List<Product>> result = employeeProductService.getAllProductsForACompany(companyId);
+        return result;
+    }
 
 }

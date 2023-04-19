@@ -16,8 +16,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSp
 {
 
     //Query 6 Calculate monthly expenses for Company
-    @Query("SELECT e.id,e.name, e.surName from  Employee e  inner join Company c on e.id=c.id where c.id =:companyId ")
-    List<Employee> getEmployeeForEachCompany (@Param("companyId") Long companyId);
+    @Query("SELECT e from  Employee e  inner join Company c on e.employeeCompany.id=c.id where c.id =:companyId ")
+    List<Employee> getEachEmployeeForACompany (@Param("companyId") Long companyId);
+
 
 }
 

@@ -1,8 +1,8 @@
 package gr.knowledge.internship.vacation.controller;
+import gr.knowledge.internship.vacation.domain.RequestForVacation;
 import gr.knowledge.internship.vacation.service.VacationRequestService;
 import gr.knowledge.internship.vacation.domain.VacationRequestStatus;
 import gr.knowledge.internship.vacation.service.dto.VacationRequestDTO;
-import gr.knowledge.internship.vacation.domain.RequestVacation;
 import gr.knowledge.internship.vacation.domain.CompanyStatus;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
 import javax.websocket.server.PathParam;
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class VaccationRequestController
 {
 
     private final VacationRequestService vacationRequestService;
-    private RequestVacation requestVacation;
+
     private CompanyStatus companyStatus;
     private VacationRequestStatus vacationRequestStatus;
     public VaccationRequestController(VacationRequestService  vacationRequestService)
@@ -43,7 +42,6 @@ public class VaccationRequestController
         VacationRequestDTO result = vacationRequestService.save(vacationRequestDTO);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
-
 
 
     //RETURN VACATION REQUEST BY ID
@@ -66,7 +64,7 @@ public class VaccationRequestController
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    //
+    //UPDATE
     @CrossOrigin
     @PutMapping("/updateVacationRequest/{id}")
     public ResponseEntity<VacationRequestDTO> updateVacationRequest(@PathVariable Long id, @RequestBody VacationRequestDTO vacationRequestDTO)
@@ -84,25 +82,30 @@ public class VaccationRequestController
     {
         vacationRequestService.delete(id);
         return "Deleted Successfully";
-
     }
 
     //Query 2 Vacation Request
+    //{"startDate" : "2022-04-01","employeeId" : 1,"endDate":"2022-04-05","holiday" : 2}//
     @PostMapping("/requestForVacation")
-    public ResponseEntity<VacationRequestDTO> requestForVacation(@RequestBody VacationRequestDTO vacationRequestDTO)
+    public ResponseEntity<VacationRequestDTO> requestForVacation(@RequestBody RequestForVacation requestForVacation)
     {
         log.debug("Rest request to get vacation request: {}");
-        VacationRequestDTO result = vacationRequestService.requestForVacation(vacationRequestDTO);
+        VacationRequestDTO result = vacationRequestService.requestForVacation(requestForVacation);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     //Query 4 Vacation Requests by Company
-    /*companyId 1,status approved,startDate 2022-03-01,endDate 2022-03-05 */
+    /*{
+    "companyId" : 1,
+    "status": "PENDING",
+    "startDate" : "2022-04-01" ,
+    "endDate" : "2022-04-05"
+    }*/
     @CrossOrigin
     @PostMapping ("/vacationRequestByCompany")
     public List<VacationRequestDTO> getvacationRequestByCompany(@RequestBody CompanyStatus companyStatus)
     {
-        return vacationRequestService.vacationRequestByCompany(companyStatus.getCompanyId(),companyStatus.getStatus(),companyStatus.getStartDate(),companyStatus.getEndDate());
+        return vacationRequestService.vacationRequestByCompany(companyStatus);
     }
 
     //Query 5 Accept or Reject Vacation Request
@@ -118,16 +121,4 @@ public class VaccationRequestController
         VacationRequestDTO result = vacationRequestService.updateVacationRequestStatus(vacationRequestStatus );
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
-    /*
-    //query 4
-    @CrossOrigin
-    @GetMapping("/vacationRequestByCompany")
-    public ResponseEntity<List<CompanyStatusDTO>> getvacationRequestByCompany(@RequestBody CompanyStatus companyStatus)
-    {
-    log.debug("Rest request to get vacationRequest by id : {}");
-    List<CompanyStatusDTO> result = vacationRequestService.vacationRequestByCompany(companyStatus.getCompanyId(),companyStatus.getStatus(),companyStatus.getStartDate(),companyStatus.getEndDate());
-    return new ResponseEntity<>(result, HttpStatus.OK);
-    }*/
-
-
 }

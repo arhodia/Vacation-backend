@@ -4,6 +4,9 @@ import gr.knowledge.internship.vacation.service.dto.BonusDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class BonusMapper extends ModelMapper {
 
@@ -19,4 +22,11 @@ public class BonusMapper extends ModelMapper {
         return this.map(bonusDTO,Bonus.class);
     }
 
+    public List<BonusDTO> toDtoList(List<Bonus> allBonuses){
+        List<BonusDTO> dtos = new ArrayList<>();
+        for(Bonus bonus :allBonuses){
+            dtos.add(toDto(bonus));
+        }
+        return dtos;
+    }
 }

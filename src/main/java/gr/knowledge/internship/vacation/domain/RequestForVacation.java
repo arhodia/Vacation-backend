@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RequestVacation {
+public class RequestForVacation {
     @Id
     LocalDate startDate;
     Long employeeId;

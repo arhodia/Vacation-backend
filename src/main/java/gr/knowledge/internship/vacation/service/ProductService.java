@@ -8,9 +8,8 @@ import gr.knowledge.internship.vacation.service.mapper.ProductMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+
+import java.util.*;
 
 
 @Service
@@ -89,6 +88,9 @@ public class ProductService {
     {
         productRepository.deleteById(id);
     }
+
+
+
 
 
 
